@@ -9,6 +9,9 @@ import UIKit
 
 class ContentViewController: UIViewController {
   
+  var isLiked = false
+  var isBookmarked = false
+  
   let appleImgV = {
     let img = UIImage(named: "apple_logo")
     let imgV = UIImageView(image: img)
@@ -37,6 +40,15 @@ class ContentViewController: UIViewController {
     imgV.widthAnchor.constraint(equalToConstant: 40).isActive = true
     imgV.heightAnchor.constraint(equalToConstant: 40).isActive = true
     return imgV
+  }()
+  
+  let bookmarkBtn = {
+    let btn = UIButton()
+    btn.translatesAutoresizingMaskIntoConstraints = false
+    btn.setImage(UIImage(named: "bookmark"), for: .normal)
+    btn.widthAnchor.constraint(equalToConstant: 40).isActive = true
+    btn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    return btn
   }()
   
   let dotsImgV = {
@@ -69,6 +81,15 @@ class ContentViewController: UIViewController {
     return imgV
   }()
   
+  let heartBtn = {
+    let btn = UIButton()
+    btn.translatesAutoresizingMaskIntoConstraints = false
+    btn.setImage(UIImage(named: "heart"), for: .normal)
+    btn.widthAnchor.constraint(equalToConstant: 40).isActive = true
+    btn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    return btn
+  }()
+  
   let messageImgV = {
     let img = UIImage(named: "message")
     let imgV = UIImageView(image: img)
@@ -93,7 +114,7 @@ class ContentViewController: UIViewController {
     let img = UIImage(named: "open_mac")
     let imgV = UIImageView(image: img)
     imgV.translatesAutoresizingMaskIntoConstraints = false
-    imgV.contentMode = .scaleAspectFill
+    imgV.contentMode = .scaleToFill
     return imgV
   }()
   
@@ -101,15 +122,23 @@ class ContentViewController: UIViewController {
     let lbl = UILabel()
     lbl.translatesAutoresizingMaskIntoConstraints = false
     lbl.text = "apple"
-    lbl.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+    lbl.font = UIFont.systemFont(ofSize: 17, weight: .bold)
     return lbl
   }()
   
   let likedLbl = {
     let lbl = UILabel()
     lbl.translatesAutoresizingMaskIntoConstraints = false
-    lbl.text = "liked by apple"
-    lbl.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+    lbl.text = "liked by"
+    lbl.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+    return lbl
+  }()
+  
+  let likePersonLbl = {
+    let lbl = UILabel()
+    lbl.translatesAutoresizingMaskIntoConstraints = false
+    lbl.text = "apple"
+    lbl.font = UIFont.systemFont(ofSize: 17, weight: .bold)
     return lbl
   }()
   
@@ -129,51 +158,102 @@ class ContentViewController: UIViewController {
     contentsSV.axis = .vertical
     contentsSV.alignment = .center
     contentsSV.distribution = .equalSpacing
+    contentsSV.spacing = 5
     contentsSV.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
     contentsSV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-    contentsSV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 8).isActive = true
+    contentsSV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
     contentsSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     
+    // top icons
     let topWrapSV = UIStackView()
+    contentsSV.addArrangedSubview(topWrapSV)
     topWrapSV.translatesAutoresizingMaskIntoConstraints = false
     topWrapSV.axis = .horizontal
     topWrapSV.spacing = 0
     topWrapSV.alignment = .center
-    topWrapSV.distribution = .fillProportionally
-    //topWrapSV.widthAnchor.constraint(equalTo: contentsSV.widthAnchor).isActive = true
-    contentsSV.addArrangedSubview(topWrapSV)
-    topWrapSV.backgroundColor = .blue
+    topWrapSV.distribution = .fill
+    topWrapSV.widthAnchor.constraint(equalTo: contentsSV.widthAnchor).isActive = true
     
     let topLeftSV = UIStackView(arrangedSubviews: [appleImgV, appleLbl, UIView()])
     topLeftSV.translatesAutoresizingMaskIntoConstraints = false
+    topWrapSV.addArrangedSubview(topLeftSV)
     topLeftSV.axis = .horizontal
     topLeftSV.spacing = 5
     topLeftSV.alignment = .center
     topLeftSV.distribution = .fill
-    //topLeftSV.widthAnchor.constraint(equalTo: topWrapSV.widthAnchor, multiplier: 0.5).isActive = true
-    //topLeftSV.topAnchor.constraint(equalTo: contentsSV.topAnchor).isActive = true
-    //topLeftSV.leadingAnchor.constraint(equalTo: contentsSV.leadingAnchor).isActive = true
-
-    let topRightSV = UIStackView(arrangedSubviews: [dotsImgV, UIView()])
+    topLeftSV.widthAnchor.constraint(equalTo: topWrapSV.widthAnchor, multiplier: 0.5).isActive = true
+    
+    let topRightSV = UIStackView(arrangedSubviews: [UIView(), dotsImgV])
     topRightSV.translatesAutoresizingMaskIntoConstraints = false
-    //contentsSV.addArrangedSubview(topRightSV)
-
+    topWrapSV.addArrangedSubview(topRightSV)
     topRightSV.axis = .horizontal
     topRightSV.spacing = 5
     topRightSV.alignment = .center
     topRightSV.distribution = .fill
-
-    //topRightSV.widthAnchor.constraint(equalTo: topWrapSV.widthAnchor, multiplier: 0.5).isActive = true
-    //topRightSV.topAnchor.constraint(equalTo: contentsSV.topAnchor).isActive = true
-    //topRightSV.trailingAnchor.constraint(equalTo: contentsSV.trailingAnchor).isActive = true
-
-    topWrapSV.addArrangedSubview(topLeftSV)
-    topWrapSV.addArrangedSubview(topRightSV)
+    topRightSV.widthAnchor.constraint(equalTo: topWrapSV.widthAnchor, multiplier: 0.5).isActive = true
     
+    // image
     contentsSV.addArrangedSubview(openMacImgV)
     openMacImgV.widthAnchor.constraint(equalTo: contentsSV.widthAnchor).isActive = true
+    openMacImgV.heightAnchor.constraint(equalTo: contentsSV.widthAnchor).isActive = true
+    
+    // bottom icons
+    let bottomWrapSV = UIStackView()
+    contentsSV.addArrangedSubview(bottomWrapSV)
+    bottomWrapSV.translatesAutoresizingMaskIntoConstraints = false
+    bottomWrapSV.axis = .horizontal
+    bottomWrapSV.spacing = 0
+    bottomWrapSV.alignment = .center
+    bottomWrapSV.distribution = .fill
+    bottomWrapSV.widthAnchor.constraint(equalTo: contentsSV.widthAnchor).isActive = true
+    
+    let bottomLeftSV = UIStackView(arrangedSubviews: [heartBtn, messageImgV, sentImgV, UIView()])
+    bottomLeftSV.translatesAutoresizingMaskIntoConstraints = false
+    bottomWrapSV.addArrangedSubview(bottomLeftSV)
+    bottomLeftSV.axis = .horizontal
+    bottomLeftSV.spacing = 5
+    bottomLeftSV.alignment = .center
+    bottomLeftSV.distribution = .fill
+    bottomLeftSV.widthAnchor.constraint(equalTo: bottomWrapSV.widthAnchor, multiplier: 0.5).isActive = true
+    
+    let bottomRightSV = UIStackView(arrangedSubviews: [UIView(), bookmarkBtn])
+    bottomRightSV.translatesAutoresizingMaskIntoConstraints = false
+    bottomWrapSV.addArrangedSubview(bottomRightSV)
+    bottomRightSV.axis = .horizontal
+    bottomRightSV.spacing = 5
+    bottomRightSV.alignment = .center
+    bottomRightSV.distribution = .fill
+    bottomRightSV.widthAnchor.constraint(equalTo: bottomWrapSV.widthAnchor, multiplier: 0.5).isActive = true
+    
+    // like
+    let likeSV = UIStackView(arrangedSubviews: [likedLbl, likePersonLbl, UIView()])
+    likeSV.translatesAutoresizingMaskIntoConstraints = false
+    contentsSV.addArrangedSubview(likeSV)
+    likeSV.axis = .horizontal
+    likeSV.spacing = 5
+    likeSV.alignment = .center
+    likeSV.distribution = .fill
+    likeSV.widthAnchor.constraint(equalTo: bottomWrapSV.widthAnchor, multiplier: 1).isActive = true
+    
+    bookmarkBtn.addTarget(self, action: #selector(bookmark(_:)), for: .touchUpInside)
+    heartBtn.addTarget(self, action: #selector(like(_:)), for: .touchUpInside)
   }
   
+  @objc func bookmark(_ sender: UIButton){
+    isBookmarked = !isBookmarked
+    if isBookmarked {
+      sender.setImage(UIImage(named: "bookmark_filled"), for: .normal)
+    } else {
+      sender.setImage(UIImage(named: "bookmark"), for: .normal)
+    }
+  }
   
-  
+  @objc func like(_ sender: UIButton){
+    isLiked = !isLiked
+    if isLiked {
+      sender.setImage(UIImage(named: "heart_filled"), for: .normal)
+    } else {
+      sender.setImage(UIImage(named: "heart"), for: .normal)
+    }
+  }
 }

@@ -22,8 +22,9 @@ class LoginViewController: UIViewController {
     text.translatesAutoresizingMaskIntoConstraints = false
     text.font = UIFont.systemFont(ofSize: 17)
     text.layer.borderWidth = 1
+    text.layer.borderColor = CGColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
     text.layer.cornerRadius = 5
-    text.backgroundColor = UIColor(red: 255, green: 208, blue: 92, alpha:50)
+    text.backgroundColor = UIColor(red: 255/255, green: 208/255, blue: 92/255, alpha: 1.0)
     return text
   }()
   
@@ -33,8 +34,9 @@ class LoginViewController: UIViewController {
     text.font = UIFont.systemFont(ofSize: 17)
     text.layer.borderWidth = 1
     text.layer.cornerRadius = 5
-    text.backgroundColor = UIColor(red: 255, green: 208, blue: 92, alpha: 100)
-    text.backgroundColor = .init(cgColor: CGColor(red: 255, green: 208, blue: 92, alpha: 0))
+    text.layer.borderColor = CGColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
+    text.backgroundColor = UIColor(red: 255/255, green: 208/255, blue: 92/255, alpha: 1.0)
+    //text.backgroundColor = .init(cgColor: CGColor(red: 255, green: 208, blue: 92, alpha: 0))
     text.textContentType = .password
     return text
   }()
@@ -52,8 +54,9 @@ class LoginViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Login", for: .normal)
     button.setTitleColor(.black, for: .normal)
-    button.backgroundColor = .yellow
+    button.backgroundColor = UIColor(red: 255/255, green: 208/255, blue: 92/255, alpha: 1.0)
     button.layer.cornerRadius = 10
+    button.heightAnchor.constraint(equalToConstant: 40).isActive = true
     return button
   }()
   
@@ -62,8 +65,9 @@ class LoginViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Login With Feedback", for: .normal)
     button.setTitleColor(.white, for: .normal)
-    button.backgroundColor = .yellow
+    button.backgroundColor = UIColor(red: 255/255, green: 208/255, blue: 92/255, alpha: 1.0)
     button.layer.cornerRadius = 10
+    button.heightAnchor.constraint(equalToConstant: 40).isActive = true
     return button
   }()
   
@@ -75,7 +79,6 @@ class LoginViewController: UIViewController {
     return button
   }()
   
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -85,6 +88,7 @@ class LoginViewController: UIViewController {
   private func updateUI() {
     
     view.backgroundColor = .white
+    //view.accessibilityScroll(.down)
     view.addSubview(profImgV)
     profImgV.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
     profImgV.heightAnchor.constraint(equalTo: profImgV.widthAnchor).isActive = true
