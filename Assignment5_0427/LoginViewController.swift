@@ -94,7 +94,8 @@ class LoginViewController: UIViewController {
     profImgV.heightAnchor.constraint(equalTo: profImgV.widthAnchor).isActive = true
     profImgV.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
     profImgV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    
+    profImgV.layer.cornerRadius = UIScreen.main.bounds.width / 4
+    profImgV.clipsToBounds = true
     let inputSV = UIStackView(arrangedSubviews: [userNmTxt, pwdTxt])
     view.addSubview(inputSV)
     

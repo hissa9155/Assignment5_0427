@@ -114,7 +114,8 @@ class ContentViewController: UIViewController {
     let img = UIImage(named: "open_mac")
     let imgV = UIImageView(image: img)
     imgV.translatesAutoresizingMaskIntoConstraints = false
-    imgV.contentMode = .scaleToFill
+    imgV.contentMode = .scaleAspectFill
+    imgV.clipsToBounds = true
     return imgV
   }()
   
